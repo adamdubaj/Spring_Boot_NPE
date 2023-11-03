@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class Comment {
     @Id
     private long id;
-    private long post_id;
+    private long postId;
     private String content;
     private LocalDateTime created;
 }
