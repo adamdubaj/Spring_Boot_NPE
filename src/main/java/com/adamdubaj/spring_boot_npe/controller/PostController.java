@@ -5,10 +5,7 @@ import com.adamdubaj.spring_boot_npe.model.Post;
 import com.adamdubaj.spring_boot_npe.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,5 +33,21 @@ public class PostController {
     @GetMapping("/posts/{id}")
     public Post getSinglePost(@PathVariable long id) {
         return postService.getSinglePost(id);
+    }
+
+    //https://cloud.google.com/apis/design/standard_methods
+    @PostMapping("posts")
+    public Post addPost(@RequestBody Post post) {
+        return postService.addPost(post);
+    }
+
+    @PutMapping("/posts")
+    public Post editPost(@RequestBody Post post) {
+        return postService.editPost(post);
+    }
+
+    @DeleteMapping("/posts/{id}")
+    public void deletePost(@PathVariable long id) {
+        postService.deletePost(id);
     }
 }

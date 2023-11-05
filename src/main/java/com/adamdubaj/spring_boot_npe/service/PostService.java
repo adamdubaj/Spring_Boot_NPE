@@ -5,6 +5,7 @@ import com.adamdubaj.spring_boot_npe.model.Comment;
 import com.adamdubaj.spring_boot_npe.model.Post;
 import com.adamdubaj.spring_boot_npe.repository.CommentRepository;
 import com.adamdubaj.spring_boot_npe.repository.PostRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -40,5 +41,21 @@ public class PostService {
         return comments.stream()
                 .filter(comment -> comment.getPostId() == id)
                 .collect(Collectors.toList());
+    }
+
+    public Post addPost(Post post) {
+        return postRepository.save(post);
+    }
+
+    @Transactional
+    public Post editPost(Post post) {
+        Post postEdited = postRepository.findById(post.getId()).orElseThrow();
+        postEdited.setTitle(post.getTitle());
+        postEdited.setContent(post.getContent());
+        return postEdited;
+    }
+
+    public void deletePost(long id) {
+        postRepository.deleteById(id);
     }
 }
